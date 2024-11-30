@@ -1,0 +1,448 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+
+
+header h1 {
+    margin: 0;
+}
+
+main {
+    padding: 20px;
+}
+
+.event-management {
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.event-management h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.event-management h3 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.event-list ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.event-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #ddd;
+    padding: 10px 0;
+}
+
+.event-list li:last-child {
+    border-bottom: none;
+}
+
+.event-list span {
+    flex: 1;
+    text-align: center;
+}
+
+.add-event form {
+    margin-top: 20px;
+}
+
+.add-event label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.add-event input[type="text"],
+.add-event input[type="date"],
+.add-event input[type="number"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.add {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.add button {
+    background-color: #4CAF50;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+
+.add button:hover {
+    background-color: #555;
+}
+
+.add-event select#event-category {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-sizing: border-box;
+    background-color: #fff;
+    color: #333;
+}
+
+.add-event select#event-category option {
+    padding: 5px;
+}
+
+footer {
+    background-color: rgba(0, 123, 255, 0.8);
+    color: #fff;
+    text-align: center;
+    padding: 10px 0;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 40px; /* Specify a height for the footer */
+}
+footer::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-image: url('hero.png');
+    background-size: cover;
+    filter: blur(15px);
+    z-index: -1;
+}
+
+
+header {
+    position: relative;
+    color:white;
+    text-align: center;
+    height: 40px;
+    width: 100%;
+    padding-bottom: 15px;
+    padding-top: 15px;
+}
+
+header::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-image: url('hero.png');
+    background-size: cover;
+    filter: blur(5px);
+    z-index: -1;
+}
+main {
+    padding: 80px;
+    flex:1;
+}
+
+/* Modal */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    backdrop-filter: blur(5px); 
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0, 0, 0); /* Fallback color */
+    background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;  /* Could be more or less, depending on screen size */
+}
+
+/* Close Button */
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Button Styles */
+#view-events-btn {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin-bottom: 20px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+#view-events-btn:hover {
+    background-color: #45a049;
+}
+
+/* Button CSS */
+button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin-top: 10px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+/* Modal CSS */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0, 0, 0);
+    background-color: rgba(0, 0, 0, 0.4); /* Fallback color */
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 10% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.close, .close-edit {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover, .close-edit:hover {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+
+/* Event List Table */
+#event-list {
+    width: 100%;
+    border-collapse: collapse;
+}
+/* Add this CSS to ensure spacing between buttons in the Actions column */
+#event-list td button {
+    margin-right: 5px; /* Adjust the spacing as needed */
+}
+#event-list td img {
+    width: 35px; /* Adjust the size as needed */
+    height: 35px;
+    margin-right: 10px; /* Add spacing between images */
+    cursor: pointer;
+}
+select#category-filter {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: #f9f9f9;
+    color: #333;
+    margin: 10px 0;
+}
+
+select#category-filter:focus {
+    outline: none;
+    border-color: #aaa;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+#event-list td img[title] {
+    position: relative;
+}
+
+#event-list td img[title]:hover::after {
+    content: attr(title);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #333;
+    color: #fff;
+    padding: 5px;
+    border-radius: 5px;
+    white-space: nowrap;
+    z-index: 10;
+}
+
+
+#event-list th, #event-list td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+#event-list th {
+    background-color: #4CAF50;
+    color: white;
+}
+
+#editEventModal .modal-content {
+    padding: 30px;
+}
+
+#editEventModal h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+#editEventModal .form-group {
+    margin-bottom: 20px;
+}
+
+#editEventModal .form-group input,
+#editEventModal .form-group select {
+    width: calc(100% - 22px); /* Adjusted for padding and border */
+    padding: 12px;
+    margin-top: 5px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+}
+
+#editEventModal button {
+    width: 100%;
+    background-color: #4CAF50;
+    color: white;
+    padding: 15px;
+    margin-top: 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+#editEventModal button:hover {
+    background-color: #45a049;
+}
+
+/* Additional Responsive Styles */
+@media screen and (max-width: 600px) {
+    .modal-content {
+        width: 90%;
+    }
+
+    #editEventModal .form-group input,
+    #editEventModal .form-group select {
+        width: calc(100% - 14px); /* Adjusted for padding and border */
+    }
+}
+
+
+/* CSS for Search Container */
+.search-container {
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#event-search {
+    padding: 8px;
+    width: 200px;
+    margin-right: 10px;
+}
+
+#search-event-btn {
+    padding: 8px 15px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+#search-event-btn:hover {
+    background-color: #45a049;
+}
+
+/* Popup Message CSS */
+#popupMessage {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: #4CAF50;
+    color: white;
+    padding: 15px;
+    z-index: 999;
+    border-radius: 5px;
+    display: none;
+}
+
+#popupMessage.show {
+    display: block;
+}
+
+#popupMessage button {
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    font-size: 20px;
+    line-height: 1;
+}

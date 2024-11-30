@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="adminstyles.css">
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-database-compat.js"></script>
+    <!-- SheetJS for Excel Export -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
+    <style>
+        /* CSS for the popup modal */
+        
+        .popup {
+            display: none;
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            color: white;
+            background-color: #45a049;
+            padding: 10px;
+            z-index: 9999;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .popup.show {
+            display: block;
+        }
+        
+        .close-popup {
+            cursor: pointer;
+            float: right;
+            font-size: 20px;
+            font-weight: bold;
+            line-height: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Admin Dashboard</h1>
+    </header>
+    <main>
+        <section class="event-management">
+            <h2>Event Management</h2>
+            <div class="add">
+                <button id="view-events-btn">View Listed Events</button>
+            </div>
+
+            <div class="add-event">
+                <h3>Add New Event</h3>
+                <form id="add-event-form">
+                    <label for="event-name">Event Name:</label>
+                    <input type="text" id="event-name" name="event-name" required>
+                    <label for="Description">Description:</label>
+                    <input type="text" id="Description" name="Description" required>
+                    <label for="event-date">Date:</label>
+                    <input type="date" id="event-date" name="event-date" required>
+                    <label for="event-location">Location:</label>
+                    <input type="hidden" id="event-id" name="event-id">
+                    <input type="text" id="event-location" name="event-location" required>
+                    <label for="max-volunteers">Max Volunteers:</label>
+                    <input type="number" id="max-volunteers" name="max-volunteers" required>
+                    <label for="points">Points:</label>
+                    <input type="number" id="points" name="points" required>
+                    <label for="event-category">Category:</label>
+                    <select id="event-category" name="event-category" required>
+                        <option value="blood_donation">Blood Donation</option>
+                        <option value="cleaning">Cleaning</option>
+                        <option value="clubs_activity">Clubs Activity</option>
+                        <option value="nss">NSS</option>
+                       <!--  <option value="newcat">New cat</option>-->
+                    </select>
+                    <div class="add">
+                        <button type="submit">Add Event</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2024 Volunteer Search</p>
+    </footer>
+
+    <!-- Modal for viewing events -->
+    <div id="eventModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Listed Events</h2>
+            <div class="search-container">
+                <label for="category-filter">Select Category:</label>
+                <select id="category-filter">
+                    <option value="all">All Categories</option>
+                    <option value="blood_donation">Blood Donation</option>
+                    <option value="cleaning">Cleaning</option>
+                    <option value="clubs_activity">Clubs Activity</option>
+                    <option value="nss">NSS</option>
+                </select>
+                <input type="text" id="event-search" placeholder="Search by name or date...">
+                <button id="search-event-btn">Search</button>
+            </div>
+            <table id="event-list">
+                <thead>
+                    <tr>
+                        <th>Event Name</th>
+                        <th>Date</th>
+                        <th>Location</th>
+                        <th>Max Volunteers</th>
+                        <th>Points</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Display events here -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Edit Event Modal -->
+    <div id="editEventModal" class="modal">
+        <div class="modal-content">
+            <span id="close-edit-event-modal" class="close">&times;</span>
+            <h2>Edit Event</h2>
+            <form id="edit-event-form">
+                <div class="form-group">
+                    <label for="edit-event-name">Event Name:</label>
+                    <input type="text" id="edit-event-name" name="event-name" required>
+                </div>
+                <div class="form-group">
+                    <label for="edit-Description">Description:</label>
+                    <input type="text" id="edit-Description" name="Description" required>
+                </div>
+                <div class="form-group">
+                    <label for="edit-event-date">Date:</label>
+                    <input type="date" id="edit-event-date" name="event-date" required>
+                </div>
+                <div class="form-group">
+                    <label for="edit-event-location">Location:</label>
+                    <input type="text" id="edit-event-location" name="event-location" required>
+                </div>
+                <div class="form-group">
+                    <label for="edit-max-volunteers">Max Volunteers:</label>
+                    <input type="number" id="edit-max-volunteers" name="max-volunteers" required>
+                </div>
+                <div class="form-group">
+                    <label for="edit-points">Points:</label>
+                    <input type="number" id="edit-points" name="points" required>
+                </div>
+                <div class="form-group">
+                    <label for="edit-event-category">Category:</label>
+                    <select id="edit-event-category" name="event-category" required>
+                        <option value="blood_donation">Blood Donation</option>
+                        <option value="cleaning">Cleaning</option>
+                        <option value="clubs_activity">Clubs Activity</option>
+                        <option value="nss">NSS</option>
+                    </select>
+                </div>
+                <input type="hidden" id="edit-event-id" name="event-id">
+                <button type="button" onclick="updateEvent()">Update Event</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Popup Modal for Success Message -->
+    <div id="popupMessage" class="popup">
+        <span class="close-popup" onclick="closePopup()">&times;</span>
+        <p id="popupText"></p>
+    </div>
+    <script src="admins.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
+    </script>
+    <script type="text/javascript">
+        (function() {
+            emailjs.init({
+                publicKey: "cGKIQAL1jRxympgy2",
+            });
+        })();
+    </script>
+</body>
+
+</html>
